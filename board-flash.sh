@@ -19,10 +19,16 @@ config_get() {
     printf -- "%s" "${val}";
 }
 
-if ! [ -f "./config.cfg" ] || ! [ -f "./config.cfg.defaults" ]
+if ! [ -f "./config.cfg" ]
 then
-    echo "Configuration file \"config.cfg\" or \"config.cfg.defaults\" not found!" >&2
-    exit 1
+    echo "Configuration file \"config.cfg\" not found!" >&2
+    if [ -f "./config.cfg.defaults" ]
+    then
+        echo "Use default config file"
+    else
+        echo "Configuration file \"config.cfg.defaults\" not found!" >&2
+        exit 1
+    fi
 fi
 
 IMX_USB_LOADER_NAME=imx_usb
